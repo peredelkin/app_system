@@ -19,8 +19,8 @@ enum _E_Sys_Timer_Status {
 };
 
 
-#define SYS_TIMER_ONE_SHOT 1
-#define SYS_TIMER_TICKS_PERIOD_US (1)
+#define SYS_TIMER_ONE_SHOT 0
+#define SYS_TIMER_TICKS_PERIOD_US (10000)
 
 
 typedef struct _S_sys_timer M_sys_timer;

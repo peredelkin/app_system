@@ -6,55 +6,11 @@
 #include <stdio.h>
 
 
-//static void sys_tim_handler(void* arg);
-
-
-static void adc_tim_handler(void* arg)
-{
-    M_sys_main* sys = (M_sys_main*)arg;
-    assert(sys != NULL);
-
-//    static struct timespec t_old;
-//    struct timespec t;
-//
-//    clock_gettime(CLOCK_MONOTONIC, &t);
-//
-//    long dnsec = t.tv_nsec - t_old.tv_nsec;
-//    if(t.tv_sec > t_old.tv_sec) dnsec += 1000000000LL;
-//
-//    printf("%ld us\n", dnsec / 1000);
-//    t_old.tv_sec = t.tv_sec;
-//    t_old.tv_nsec = t.tv_nsec;
-
-
-//    struct timespec t;
-//    clock_gettime(CLOCK_MONOTONIC, &t);
-//    printf("adc %ld s %ld ns\n", t.tv_sec, t.tv_nsec);
-
-    CALC(adc);
-}
 
 static void sys_tim_handler(void* arg)
 {
     M_sys_main* sys = (M_sys_main*)arg;
     assert(sys != NULL);
-
-//    static struct timespec t_old;
-//    struct timespec t;
-//
-//    clock_gettime(CLOCK_MONOTONIC, &t);
-//
-//    long dnsec = t.tv_nsec - t_old.tv_nsec;
-//    if(t.tv_sec > t_old.tv_sec) dnsec += 1000000000LL;
-//
-//    printf("%ld us\n", dnsec / 1000);
-//    t_old.tv_sec = t.tv_sec;
-//    t_old.tv_nsec = t.tv_nsec;
-
-
-//    struct timespec t;
-//    clock_gettime(CLOCK_MONOTONIC, &t);
-//    printf("sys %ld s %ld ns\n", t.tv_sec, t.tv_nsec);
 
     CALC((*sys));
 }
@@ -63,58 +19,7 @@ static void ms_tim_handler(void* arg)
 {
     M_sys_main* sys = (M_sys_main*)arg;
     assert(sys != NULL);
-
-//    static struct timespec t_old;
-//    struct timespec t;
-//
-//    clock_gettime(CLOCK_MONOTONIC, &t);
-//
-//    long dnsec = t.tv_nsec - t_old.tv_nsec;
-//    if(t.tv_sec > t_old.tv_sec) dnsec += 1000000000LL;
-//
-//    printf("%ld us\n", dnsec / 1000);
-//    t_old.tv_sec = t.tv_sec;
-//    t_old.tv_nsec = t.tv_nsec;
-
-
-//    struct timespec t;
-//    clock_gettime(CLOCK_MONOTONIC, &t);
-//    printf("ms %ld s %ld ns\n", t.tv_sec, t.tv_nsec);
 }
-
-static void adc_handler(void* arg)
-{
-    M_sys_main* sys = (M_sys_main*)arg;
-    assert(sys != NULL);
-
-    // Если системный таймер однократного счёта, то запустим его.
-    #if defined(SYS_TIMER_ONE_SHOT) && SYS_TIMER_ONE_SHOT == 1
-
-    //sys_tim_handler(arg);
-
-    sys_tim.control = SYS_TIMER_CONTROL_ENABLE;
-    CONTROL(sys_tim);
-
-    // TODO: reaction on timer error.
-    if(sys_tim.status & SYS_TIMER_STATUS_ERROR){
-        sys->errors |= SYS_MAIN_ERROR_INTERNAL;
-        sys->state = SYS_MAIN_STATE_ERROR;
-    }
-
-    #endif
-}
-
-//static void check_modules_error_status(M_sys_main* sys)
-//{
-//    status_t status = STATUS_NONE;
-//
-//    status |= adc.status;
-//    status |= adc_tim.status;
-//    status |= sys_tim.status;
-//    status |= ms_tim.status;
-//
-//    status &= STATUS_ERROR;
-//}
 
 METHOD_INIT_IMPL(M_sys_main, sys)
 {
@@ -136,30 +41,10 @@ METHOD_INIT_IMPL(M_sys_main, sys)
     // Осциллограф.
     INIT(dlog);
 
-    // АЦП.
-    INIT(adc);
-    CALLBACK_PROC(adc.on_conversion) = adc_handler;
-    CALLBACK_ARG(adc.on_conversion) = (void*)sys;
-
     // Вычислительные модули.
-    // Фазы и амплитуды.
-    INIT(Ua_phase_ampl);
-    INIT(Ub_phase_ampl);
-    INIT(Uc_phase_ampl);
-    // RMS.
-    INIT(Ua_rms);
-    INIT(Ub_rms);
-    INIT(Uc_rms);
+    INIT(blink);
 
     // Таймеры.
-    // Таймер АЦП.
-    INIT(adc_tim);
-    CALLBACK_PROC(adc_tim.on_timeout) = adc_tim_handler;
-    CALLBACK_ARG(adc_tim.on_timeout) = (void*)sys;
-    if(adc_tim.status & ADC_TIMER_STATUS_ERROR){
-        init_status = STATUS_ERROR;
-    }
-
     // Системный таймер.
     INIT(sys_tim);
     CALLBACK_PROC(sys_tim.on_timeout) = sys_tim_handler;
@@ -181,10 +66,10 @@ METHOD_INIT_IMPL(M_sys_main, sys)
     // если инициализация завершена с ошибкой.
     if(!(init_status & STATUS_ERROR)){
 
-        // Запуск таймера АЦП.
-        adc_tim.control = ADC_TIMER_CONTROL_ENABLE;
-        CONTROL(adc_tim);
-        if(!(adc_tim.status & ADC_TIMER_STATUS_RUN)){
+        // Запуск системного таймера.
+    	sys_tim.control = SYS_TIMER_CONTROL_ENABLE;
+		CONTROL(sys_tim);
+        if(!(sys_tim.status & SYS_TIMER_STATUS_RUN)){
             init_status = STATUS_ERROR;
         }
 
@@ -211,22 +96,14 @@ METHOD_INIT_IMPL(M_sys_main, sys)
 METHOD_DEINIT_IMPL(M_sys_main, sys)
 {
     // Деинициализация модулей.
-    DEINIT(adc_tim);
     DEINIT(sys_tim);
     DEINIT(ms_tim);
-    DEINIT(adc);
     DEINIT(dlog);
     DEINIT(conf);
+    DEINIT(blink);
 
     // Вычислительные модули.
-    // Фазы и амплитуды.
-    DEINIT(Ua_phase_ampl);
-    DEINIT(Ub_phase_ampl);
-    DEINIT(Uc_phase_ampl);
-    // RMS.
-    DEINIT(Ua_rms);
-    DEINIT(Ub_rms);
-    DEINIT(Uc_rms);
+
 
     // Сброс внутренних переменных.
     sys->control = SYS_MAIN_CONTROL_NONE;
@@ -298,26 +175,7 @@ METHOD_CALC_IMPL(M_sys_main, sys)
     //CALC(adc); // АЦП вычисляется в коллбэке таймера АЦП.
 
     // Вычислительные модули.
-    // Фаза и амплитуда.
-    // Фаза A.
-    Ua_phase_ampl.in_value = adc.out_Ua;
-    CALC(Ua_phase_ampl);
-    // Фаза B.
-    Ub_phase_ampl.in_value = adc.out_Ub;
-    CALC(Ub_phase_ampl);
-    // Фаза C.
-    Uc_phase_ampl.in_value = adc.out_Uc;
-    CALC(Uc_phase_ampl);
-    // RMS.
-    // Фаза A.
-    Ua_rms.in_value = adc.out_Ua;
-    CALC(Ua_rms);
-    // Фаза B.
-    Ub_rms.in_value = adc.out_Ub;
-    CALC(Ub_rms);
-    // Фаза C.
-    Uc_rms.in_value = adc.out_Uc;
-    CALC(Uc_rms);
+    CALC(blink);
 
     // Последний модуль - запись лога.
     CALC(dlog);
@@ -326,7 +184,6 @@ METHOD_CALC_IMPL(M_sys_main, sys)
 METHOD_IDLE_IMPL(M_sys_main, sys)
 {
     IDLE(conf);
-    IDLE(adc);
     IDLE(dlog);
 }
 

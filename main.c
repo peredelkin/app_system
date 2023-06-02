@@ -6,8 +6,8 @@
 
 #ifndef __arm__
 #define RUN_TESTS 0
-#define WRITE_DLOG_TO_CSV 1
-#define WRITE_DLOG_TO_VCD 0
+#define WRITE_DLOG_TO_CSV 0
+#define WRITE_DLOG_TO_VCD 1
 #endif
 
 #if defined(RUN_TESTS) && RUN_TESTS == 1
@@ -91,7 +91,7 @@ static void write_dlog_to_file_vcd(void)
     char buf[BIN_BUF_SIZE];
 
     // write header.
-    fprintf(f, "$timescale 625 us $end\n");
+    fprintf(f, "$timescale %u us $end\n", SYS_TIMER_TICKS_PERIOD_US);
     fprintf(f, "$scope module dlog $end\n");
     for(i = 0; i < DATA_LOG_CH_COUNT; i ++){
         if(dlog.p_ch[i].enabled){
@@ -142,35 +142,9 @@ int main(void)
     windows_timer_set_max_res();
 #endif
 
-    // Ua, Ub. Uc.
-    dlog.p_ch[0].reg_id = REG_ID_ADC_UA; //REG_ID_PHASE_AMPL_UA_VALUE
+    // Blink.
+    dlog.p_ch[0].reg_id = REG_ID_BLINK_Q;
     dlog.p_ch[0].enabled = 1;
-    dlog.p_ch[1].reg_id = REG_ID_ADC_UB;
-    dlog.p_ch[1].enabled = 1;
-    dlog.p_ch[2].reg_id = REG_ID_ADC_UC;
-    dlog.p_ch[2].enabled = 1;
-    // Ua phase & ampl.
-    dlog.p_ch[3].reg_id = REG_ID_PHASE_AMPL_UA_PHASE;
-    dlog.p_ch[3].enabled = 1;
-    dlog.p_ch[4].reg_id = REG_ID_PHASE_AMPL_UA_AMPL;
-    dlog.p_ch[4].enabled = 1;
-    // Ub phase & ampl.
-    dlog.p_ch[5].reg_id = REG_ID_PHASE_AMPL_UB_PHASE;
-    dlog.p_ch[5].enabled = 1;
-    dlog.p_ch[6].reg_id = REG_ID_PHASE_AMPL_UB_AMPL;
-    dlog.p_ch[6].enabled = 1;
-    // Uc phase & ampl.
-    dlog.p_ch[7].reg_id = REG_ID_PHASE_AMPL_UC_PHASE;
-    dlog.p_ch[7].enabled = 1;
-    dlog.p_ch[8].reg_id = REG_ID_PHASE_AMPL_UC_AMPL;
-    dlog.p_ch[8].enabled = 1;
-    // RMS Ua, Ub, Uc.
-    dlog.p_ch[9].reg_id = REG_ID_RMS_UA;
-    dlog.p_ch[9].enabled = 1;
-    dlog.p_ch[10].reg_id = REG_ID_RMS_UB;
-    dlog.p_ch[10].enabled = 1;
-    dlog.p_ch[11].reg_id = REG_ID_RMS_UC;
-    dlog.p_ch[11].enabled = 1;
 
     dlog.control = CONTROL_ENABLE;
 
@@ -188,7 +162,7 @@ int main(void)
     for(;;){
         IDLE(sys);
 
-        if(adc_tim.out_counter >= DATA_LOG_CH_LEN) break;
+        if(sys_tim.out_counter >= DATA_LOG_CH_LEN) break;
     }
 
     dlog.control = CONTROL_NONE;
