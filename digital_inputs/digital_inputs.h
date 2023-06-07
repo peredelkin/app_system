@@ -15,10 +15,11 @@ enum _E_Digital_Inputs_Status {
 
 #define DIGITAL_INPUTS_IN_COUNT 32
 
-typedef union_u16_t digital_inputs_in_state_t;
-typedef reg_u16_t digital_inputs_out_state_t;
-typedef reg_u16_t digital_inputs_out_sel_t;
-typedef reg_u16_t digital_inputs_out_inv_t;
+typedef reg_u8_t digital_inputs_in_state_t;
+typedef reg_u8_t digital_inputs_out_state_t;
+typedef reg_u8_t digital_inputs_out_sel_t;
+typedef reg_u8_t digital_inputs_out_inv_t;
+typedef union_u16_t digital_inputs_internal_state_t;
 
 //! Предварительная декларация типа модуля.
 typedef struct _S_Digital_Inputs M_digital_inputs;
@@ -45,6 +46,7 @@ struct _S_Digital_Inputs {
     METHOD_CALC(M_digital_inputs);
     // Коллбэки.
     // Внутренние данные.
+    digital_inputs_internal_state_t internal_in_di[DIGITAL_INPUTS_IN_COUNT];
 };
 
 EXTERN METHOD_INIT_PROTO(M_digital_inputs);
@@ -56,15 +58,15 @@ EXTERN METHOD_CALC_PROTO(M_digital_inputs);
         0, /* control */\
         0, /* status */\
         /* Входные данные */\
-		{{0}},/* in_di */\
+		{0},/* in_di */\
         /* Выходные данные */\
 		0, /* out_start */\
 		0, /* out_stop */\
         /* Параметры */\
-		0, /* sel_start */\
-		0, /* inv_start */\
-		0, /* sel_stop */\
-		0, /* inv_stop */\
+		8, /* sel_start */\
+		1, /* inv_start */\
+		9, /* sel_stop */\
+		1, /* inv_stop */\
         /* Регистры */\
         /* Методы */\
         METHOD_INIT_PTR(M_digital_inputs),\
@@ -72,6 +74,7 @@ EXTERN METHOD_CALC_PROTO(M_digital_inputs);
         METHOD_CALC_PTR(M_digital_inputs),\
         /* Коллбэки */\
         /* Внутренние данные */\
+		{{0}}, /*internal_in_di*/\
     }
 
 #endif /* DIGITAL_INPUTS_H */

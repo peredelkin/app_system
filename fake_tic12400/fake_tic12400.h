@@ -17,7 +17,7 @@ enum _E_fake_tic12400_Status {
 #define TIC12400_DI_COUNT 24
 #define TIC12400_AI_COUNT 26
 
-typedef union_u16_t tic12400_di_state_t;
+typedef reg_u8_t tic12400_di_state_t;
 typedef reg_u16_t tic12400_ai_state_t;
 
 typedef struct {
@@ -63,7 +63,7 @@ EXTERN METHOD_CALC_PROTO(M_fake_tic12400);
 		0,/* status */\
         /* Входные данные */\
         /* Выходные данные */\
-		{{0}},/* out_di */\
+		{0},/* out_di */\
 		{0},/* out_ai */\
         /* Параметры */\
         /* Регистры */\

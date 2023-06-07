@@ -18,6 +18,7 @@ extern M_ms_timer ms_tim;
 extern M_data_log dlog;
 
 extern M_fake_tic12400 fake_tic12400;
+extern M_digital_inputs digital_inputs;
 extern M_blink blink;
 
 #endif /* MODULES_H */

@@ -180,6 +180,12 @@ METHOD_CALC_IMPL(M_sys_main, sys)
 
     // Вычислительные модули.
     CALC(fake_tic12400);
+
+    for (int n = 0; n < TIC12400_DI_COUNT; n++) {
+    	digital_inputs.in_di[n] = fake_tic12400.out_di[n];
+    }
+
+    CALC(digital_inputs);
     CALC(blink);
 
     // Последний модуль - запись лога.
