@@ -39,13 +39,15 @@ EXTERN METHOD_CALC_PROTO(M_mod_tmpl);
 
 #define MOD_TMPL_DEFAULTS {\
         /* Базовые поля */\
-        0, 0, /* control, status */\
+        0, /* control */\
+        0, /* status */\
         /* Входные данные */\
         /* Выходные данные */\
         /* Параметры */\
         /* Регистры */\
         /* Методы */\
-        METHOD_INIT_PTR(M_mod_tmpl), METHOD_DEINIT_PTR(M_mod_tmpl),\
+        METHOD_INIT_PTR(M_mod_tmpl),\
+        METHOD_DEINIT_PTR(M_mod_tmpl),\
         METHOD_CALC_PTR(M_mod_tmpl),\
         /* Коллбэки */\
         /* Внутренние данные */\

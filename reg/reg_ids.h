@@ -13,6 +13,12 @@
 // Nominal values
 
 
+// Fake tic12400
+#define REG_ID_FAKE_TIC12400_DI1    200
+#define REG_ID_FAKE_TIC12400_DI1N    201
+#define REG_ID_FAKE_TIC12400_DI2    202
+#define REG_ID_FAKE_TIC12400_DI2N    203
+
 // Blink
 #define REG_ID_BLINK_Q    300
 

@@ -60,9 +60,19 @@ METHOD_CALC_IMPL(M_data_log, dlog)
         ch_par = &dlog->p_ch[i];
         ch_dat = &dlog->r_ch[i];
 
-        if(ch_par->enabled && ch_dat->reg != NULL && reg_data(ch_dat->reg) != NULL){
-            val = reg_value(ch_dat->reg, data_log_value_t);
-        }else{
+		if (ch_par->enabled && ch_dat->reg != NULL && reg_data(ch_dat->reg) != NULL) {
+			switch (ch_dat->reg->type) {
+			case REG_TYPE_I8: val = reg_value(ch_dat->reg, reg_i8_t);
+				break;
+			case REG_TYPE_U8: val = reg_value(ch_dat->reg, reg_u8_t);
+				break;
+			case REG_TYPE_I16: val = reg_value(ch_dat->reg, reg_i16_t);
+				break;
+			case REG_TYPE_U16: val = reg_value(ch_dat->reg, reg_u16_t);
+				break;
+			default: val = reg_value(ch_dat->reg, data_log_value_t);
+			}
+		}else{
             val = 0;
         }
 

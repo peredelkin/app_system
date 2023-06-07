@@ -188,7 +188,7 @@ def parse_group(line, line_num):
 
 def parse_reg(line, line_num):
 
-    reg_types = ["I32", "U32", "IQ24", "IQ15"];
+    reg_types = ["I8", "U8", "I16", "U16", "I32", "U32", "IQ24", "IQ15"];
 
     parts = line.partition(" ");
 

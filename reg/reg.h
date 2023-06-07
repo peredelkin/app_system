@@ -91,6 +91,26 @@ ALWAYS_INLINE static reg_iq15_t reg_value_iq15(const reg_t* reg)
  * @param reg Регистр.
  * @return Значение данных.
  */
+ALWAYS_INLINE static reg_i16_t reg_value_i16(const reg_t* reg)
+{
+    return reg_value(reg, reg_i16_t);
+}
+
+/**
+ * Получает значение данных регистра.
+ * @param reg Регистр.
+ * @return Значение данных.
+ */
+ALWAYS_INLINE static reg_u16_t reg_value_u16(const reg_t* reg)
+{
+    return reg_value(reg, reg_u16_t);
+}
+
+/**
+ * Получает значение данных регистра.
+ * @param reg Регистр.
+ * @return Значение данных.
+ */
 ALWAYS_INLINE static reg_i32_t reg_value_i32(const reg_t* reg)
 {
     return reg_value(reg, reg_i32_t);

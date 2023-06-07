@@ -42,6 +42,8 @@ METHOD_INIT_IMPL(M_sys_main, sys)
     INIT(dlog);
 
     // Вычислительные модули.
+    INIT(fake_tic12400);
+    INIT(digital_inputs);
     INIT(blink);
 
     // Таймеры.
@@ -100,6 +102,8 @@ METHOD_DEINIT_IMPL(M_sys_main, sys)
     DEINIT(ms_tim);
     DEINIT(dlog);
     DEINIT(conf);
+    DEINIT(fake_tic12400);
+    DEINIT(digital_inputs);
     DEINIT(blink);
 
     // Вычислительные модули.
@@ -175,6 +179,7 @@ METHOD_CALC_IMPL(M_sys_main, sys)
     //CALC(adc); // АЦП вычисляется в коллбэке таймера АЦП.
 
     // Вычислительные модули.
+    CALC(fake_tic12400);
     CALC(blink);
 
     // Последний модуль - запись лога.

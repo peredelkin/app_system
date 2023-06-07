@@ -9,5 +9,6 @@
 #include "module/error.h"
 #include "module/warning.h"
 #include "reg/reg_types.h"
+#include "union/union.h"
 
 #endif /* MODULE_BASE_H */

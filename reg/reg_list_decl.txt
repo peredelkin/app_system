@@ -21,6 +21,13 @@ GROUP CONF, 0
 !REG ERRORS, sys.errors, U32, NONE
 !REG WARNINGS, sys.warnings, U32, NONE
 
+// Fake tic12400
+GROUP FAKE_TIC12400, 200
+REG DI1, fake_tic12400.out_di[8].byte[0], U8, NONE
+REG DI1N, fake_tic12400.out_di[8].byte[1], U8, NONE
+REG DI2, fake_tic12400.out_di[9].byte[0], U8, NONE
+REG DI2N, fake_tic12400.out_di[9].byte[1], U8, NONE
+
 // Blink
 GROUP BLINK, 300
 REG Q, blink.out_value, U32, NONE
