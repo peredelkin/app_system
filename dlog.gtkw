@@ -1,25 +1,24 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Wed Jun 07 05:46:12 2023
+[*] Thu Jun 08 08:16:51 2023
 [*]
 [dumpfile] "C:\Users\Ruslan\eclipse-workspace\controlsystem\dlog.vcd"
-[dumpfile_mtime] "Wed Jun 07 05:43:04 2023"
-[dumpfile_size] 5610
+[dumpfile_mtime] "Thu Jun 08 08:10:30 2023"
+[dumpfile_size] 6242
 [savefile] "C:\Users\Ruslan\eclipse-workspace\controlsystem\dlog.gtkw"
 [timestart] 0
 [size] 1280 971
 [pos] -1 -1
-*-18.307079 90000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-18.307079 737000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [sst_width] 211
 [signals_width] 240
 [sst_expanded] 1
 [sst_vpaned_height] 285
 @8022
-dlog.dlog_ch0[31:0]
-dlog.dlog_ch1[31:0]
 dlog.dlog_ch2[31:0]
 dlog.dlog_ch3[31:0]
-@8023
+dlog.dlog_ch4[31:0]
+dlog.dlog_ch5[31:0]
 dlog.dlog_ch31[31:0]
 [pattern_trace] 1
 [pattern_trace] 0

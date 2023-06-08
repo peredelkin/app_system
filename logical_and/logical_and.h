@@ -16,7 +16,8 @@ enum _E_Logical_And_Status {
 #define LOGICAL_AND_IN_COUNT 4
 
 typedef union_u16_t logical_and_data_out_t;
-typedef reg_u8_t logical_and_internal_counter_t;
+typedef reg_u16_t logical_and_internal_counter_t;
+typedef reg_u8_t logical_and_internal_data_t;
 
 typedef struct _S_Logical_And_Param {
 	reg_u16_t enabled;
@@ -44,8 +45,8 @@ struct _S_Logical_And {
     METHOD_IDLE(M_logical_and);
     // Коллбэки.
     // Внутренние данные.
-    logical_and_internal_counter_t and_counter;
     logical_and_internal_counter_t en_counter;
+    logical_and_internal_data_t data[LOGICAL_AND_IN_COUNT];
     reg_t* reg[LOGICAL_AND_IN_COUNT];
 };
 
@@ -71,8 +72,8 @@ EXTERN METHOD_IDLE_PROTO(M_logical_and);
 		METHOD_IDLE_PTR(M_logical_and),\
         /* Коллбэки */\
         /* Внутренние данные */\
-		0, /* and_counter */\
 		0, /* en_counter */\
+		{0}, /* counter */\
 		{0}, /* internal_reg */\
     }
 
