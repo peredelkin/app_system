@@ -15,11 +15,11 @@ enum _E_Digital_Inputs_Status {
 
 #define DIGITAL_INPUTS_IN_COUNT 32
 
-typedef reg_u8_t digital_inputs_in_state_t;
-typedef reg_u8_t digital_inputs_out_state_t;
-typedef reg_u8_t digital_inputs_out_sel_t;
-typedef reg_u8_t digital_inputs_out_inv_t;
-typedef union_u16_t digital_inputs_internal_state_t;
+typedef reg_u8_t digital_inputs_data_in_t;
+typedef reg_u8_t digital_inputs_data_out_t;
+typedef reg_u8_t digital_inputs_param_out_sel_t;
+typedef reg_u8_t digital_inputs_param_out_inv_t;
+typedef union_u16_t digital_inputs_internal_data_t;
 
 //! Предварительная декларация типа модуля.
 typedef struct _S_Digital_Inputs M_digital_inputs;
@@ -30,15 +30,15 @@ struct _S_Digital_Inputs {
     control_t control; //!< Слово управления.
     status_t status; //!< Слово состояния.
     // Входные данные.
-    digital_inputs_in_state_t in_di[DIGITAL_INPUTS_IN_COUNT];
+    digital_inputs_data_in_t d_in[DIGITAL_INPUTS_IN_COUNT];
     // Выходные данные.
-    digital_inputs_out_state_t out_start;
-    digital_inputs_out_state_t out_stop;
+    digital_inputs_data_out_t d_out_start;
+    digital_inputs_data_out_t d_out_stop;
     // Параметры.
-    digital_inputs_out_sel_t sel_start;
-    digital_inputs_out_inv_t inv_start;
-    digital_inputs_out_sel_t sel_stop;
-    digital_inputs_out_inv_t inv_stop;
+    digital_inputs_param_out_sel_t p_sel_start;
+    digital_inputs_param_out_inv_t p_inv_start;
+    digital_inputs_param_out_sel_t p_sel_stop;
+    digital_inputs_param_out_inv_t p_inv_stop;
     // Регистры.
     // Методы.
     METHOD_INIT(M_digital_inputs);
@@ -46,7 +46,7 @@ struct _S_Digital_Inputs {
     METHOD_CALC(M_digital_inputs);
     // Коллбэки.
     // Внутренние данные.
-    digital_inputs_internal_state_t internal_in_di[DIGITAL_INPUTS_IN_COUNT];
+    digital_inputs_internal_data_t internal_in[DIGITAL_INPUTS_IN_COUNT];
 };
 
 EXTERN METHOD_INIT_PROTO(M_digital_inputs);
@@ -64,9 +64,9 @@ EXTERN METHOD_CALC_PROTO(M_digital_inputs);
 		0, /* out_stop */\
         /* Параметры */\
 		8, /* sel_start */\
-		1, /* inv_start */\
+		0, /* inv_start */\
 		9, /* sel_stop */\
-		1, /* inv_stop */\
+		0, /* inv_stop */\
         /* Регистры */\
         /* Методы */\
         METHOD_INIT_PTR(M_digital_inputs),\

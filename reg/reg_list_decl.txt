@@ -32,8 +32,13 @@ REG Q, blink.out_value, U32, NONE
 
 // Digital Inputs
 GROUP DIGITAL_INPUTS, 400
-REG START, digital_inputs.out_start, U8, NONE
-REG STOP, digital_inputs.out_stop, U8, NONE
+REG START, digital_inputs.d_out_start, U8, NONE
+REG STOP, digital_inputs.d_out_stop, U8, NONE
+
+// Logical AND
+GROUP LOGICAL_AND, 500
+REG OUT0, logical_and_0.out.u8[0], U8, NONE
+REG OUT0N, logical_and_0.out.u8[1], U8, NONE
 
 !// Measurement
 !GROUP MEAS, 400

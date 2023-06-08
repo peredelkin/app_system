@@ -17,8 +17,8 @@ enum _Union_U16_State {
 };
 
 typedef union _union_u16 {
-	reg_u16_t all;
-	reg_u8_t byte[2];
+	reg_u16_t u16;
+	reg_u8_t u8[2];
 } union_u16_t;
 
 #endif /* UNION_UNION_H_ */

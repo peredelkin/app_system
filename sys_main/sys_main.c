@@ -44,6 +44,13 @@ METHOD_INIT_IMPL(M_sys_main, sys)
     // Вычислительные модули.
     INIT(fake_tic12400);
     INIT(digital_inputs);
+
+    logical_and_0.p_in[0].reg_id = REG_ID_DIGITAL_INPUTS_START; //настройка AND0
+    logical_and_0.p_in[0].enabled = 1;
+    logical_and_0.p_in[1].reg_id = REG_ID_DIGITAL_INPUTS_STOP; //настройка AND0
+    logical_and_0.p_in[1].enabled = 1;
+
+    INIT(logical_and_0);
     INIT(blink);
 
     // Таймеры.
@@ -104,6 +111,7 @@ METHOD_DEINIT_IMPL(M_sys_main, sys)
     DEINIT(conf);
     DEINIT(fake_tic12400);
     DEINIT(digital_inputs);
+    DEINIT(logical_and_0);
     DEINIT(blink);
 
     // Вычислительные модули.
@@ -182,10 +190,11 @@ METHOD_CALC_IMPL(M_sys_main, sys)
     CALC(fake_tic12400);
 
     for (int n = 0; n < TIC12400_DI_COUNT; n++) {
-    	digital_inputs.in_di[n] = fake_tic12400.out_di[n];
+    	digital_inputs.d_in[n] = fake_tic12400.out_di[n];
     }
 
     CALC(digital_inputs);
+    CALC(logical_and_0);
     CALC(blink);
 
     // Последний модуль - запись лога.
@@ -195,6 +204,7 @@ METHOD_CALC_IMPL(M_sys_main, sys)
 METHOD_IDLE_IMPL(M_sys_main, sys)
 {
     IDLE(conf);
+    IDLE(logical_and_0);
     IDLE(dlog);
 }
 
