@@ -9,5 +9,5 @@ M_data_log dlog = DATA_LOG_DEFAULTS;
 
 M_fake_tic12400 fake_tic12400 = FAKE_TIC12400_DEFAULTS;
 M_digital_inputs digital_inputs = DIGITAL_INPUTS_DEFAULTS;
-M_logical_and logical_and_0 = LOGICAL_AND_DEFAULTS;
+M_digital_outputs digital_outputs = DIGITAL_OUTPUTS_DEFAULTS;
 M_blink blink = BLINK_DEFAULTS;

@@ -152,10 +152,10 @@ int main(void)
     dlog.p_ch[2].enabled = 1;
     dlog.p_ch[3].reg_id = REG_ID_DIGITAL_INPUTS_STOP;
     dlog.p_ch[3].enabled = 1;
-    // AND
-    dlog.p_ch[4].reg_id = REG_ID_LOGICAL_AND_OUT0;
+    // DO
+    dlog.p_ch[4].reg_id = REG_ID_DIGITAL_OUTPUTS_DO1;
     dlog.p_ch[4].enabled = 1;
-    dlog.p_ch[5].reg_id = REG_ID_LOGICAL_AND_OUT0N;
+    dlog.p_ch[5].reg_id = REG_ID_DIGITAL_OUTPUTS_DO2;
     dlog.p_ch[5].enabled = 1;
     // Blink.
     dlog.p_ch[31].reg_id = REG_ID_BLINK_Q;

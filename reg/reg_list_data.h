@@ -26,9 +26,9 @@ REG(REG_ID_BLINK_Q, blink.out_value, REG_TYPE_U32, REG_FLAG_NONE)
 REG(REG_ID_DIGITAL_INPUTS_START, digital_inputs.d_out_start, REG_TYPE_U8, REG_FLAG_NONE)
 REG(REG_ID_DIGITAL_INPUTS_STOP, digital_inputs.d_out_stop, REG_TYPE_U8, REG_FLAG_NONE)
 
-// Logical AND
-REG(REG_ID_LOGICAL_AND_OUT0, logical_and_0.out.u8[0], REG_TYPE_U8, REG_FLAG_NONE)
-REG(REG_ID_LOGICAL_AND_OUT0N, logical_and_0.out.u8[1], REG_TYPE_U8, REG_FLAG_NONE)
+// Digital Outputs
+REG(REG_ID_DIGITAL_OUTPUTS_DO1, digital_outputs.d_out[0], REG_TYPE_U8, REG_FLAG_NONE)
+REG(REG_ID_DIGITAL_OUTPUTS_DO2, digital_outputs.d_out[1], REG_TYPE_U8, REG_FLAG_NONE)
 
 
 // End

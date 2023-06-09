@@ -24,9 +24,9 @@
 #define REG_ID_DIGITAL_INPUTS_START    400
 #define REG_ID_DIGITAL_INPUTS_STOP    401
 
-// Logical AND
-#define REG_ID_LOGICAL_AND_OUT0    500
-#define REG_ID_LOGICAL_AND_OUT0N    501
+// Digital Outputs
+#define REG_ID_DIGITAL_OUTPUTS_DO1    500
+#define REG_ID_DIGITAL_OUTPUTS_DO2    501
 
 
 // End

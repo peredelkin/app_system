@@ -36,8 +36,8 @@ struct _S_Digital_Inputs {
     digital_inputs_data_out_t d_out_stop;
     // Параметры.
     digital_inputs_param_out_sel_t p_sel_start;
-    digital_inputs_param_out_inv_t p_inv_start;
     digital_inputs_param_out_sel_t p_sel_stop;
+    digital_inputs_param_out_inv_t p_inv_start;
     digital_inputs_param_out_inv_t p_inv_stop;
     // Регистры.
     // Методы.
@@ -64,8 +64,8 @@ EXTERN METHOD_CALC_PROTO(M_digital_inputs);
 		0, /* out_stop */\
         /* Параметры */\
 		8, /* sel_start */\
-		0, /* inv_start */\
 		9, /* sel_stop */\
+		0, /* inv_start */\
 		0, /* inv_stop */\
         /* Регистры */\
         /* Методы */\
